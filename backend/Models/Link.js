@@ -1,10 +1,13 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
+const linkarr = new Schema({
+     link: { type: String, required: true,min:6 },
+})
+
 const linkSchema = new Schema({
-     Link1: { type: String, required: true,min:6 },
-     Link2: { type: String, required: true ,min:6},
-     Link3: { type: String, required: true ,min:6},
+     _id:{ type:String, required:true, min:6 },
+     Link:{ type:[linkarr], required:true}
 }, {
      timestamps:true
 })

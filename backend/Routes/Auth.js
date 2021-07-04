@@ -3,6 +3,8 @@ const userModel = require("../Models/User")
 const { registerValidation, loginValidation } = require("../Models/Validation")
 const bycrypt = require("bcrypt")
 const jwt=require('jsonwebtoken')
+const Cryptr = require('cryptr')
+const cryptr = new Cryptr(process.env.TOKEN_ENCRYPT)
 
 
 //REGISTER
@@ -41,7 +43,7 @@ router.post('/register', async (req, res) => {
 
 
 //LOGIN
-router.post("/login",async (req, res) => {
+router.post("/login", async (req, res) => {
      //Login Validation
      const { error } = loginValidation(req.body)
      
@@ -66,12 +68,17 @@ router.post("/login",async (req, res) => {
                }
                else {
                     //create a token
-                    const token = jwt.sign({ _id: user._id,name:user.name }, process.env.TOKEN_SECRET)
-                    res.header('auth-token',token).send(token)
+                    const token = jwt.sign({ _id: user._id,name:user.name }, process.env.TOKEN_SECRET,{
+                         expiresIn: '1d' // expires in 365 days
+                    })
+
+                    const entoken = cryptr.encrypt(token); 
+
+                    res.header('auth-token',entoken).send(entoken)
                     
                }
 
           }
-     }
+     }   
 })
 module.exports = router;
