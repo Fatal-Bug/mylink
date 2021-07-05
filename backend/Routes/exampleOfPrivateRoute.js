@@ -8,28 +8,14 @@ const cryptr = new Cryptr(process.env.TOKEN_ENCRYPT);
 
 
 router.post('/link', verify,async (req, res) => {
-     // Link validation
-     //const { error } = linkValidation(req.body)
-     
-     // if (error)
-     // {
-     //      res.status(400).send(error.details[0].message)}
-     // else {
-     // //creating a new Link
-          
-     //      const { _id, Link } = req.body;
-          
-     //      const newLink = new linkModel({
-     //           _id,
-     //           Link
-     //      });
+      //Link validation
+     const { error } = linkValidation(req.body)
 
-     //      try {const hola= await newLink.save()
-     //           res.send("Link added done")}
-     //      catch (err) { res.status(400).send(err) }
-          
-     // }     
-     // for test
+     if (error) {
+          res.status(400).send(error.details[0].message)
+     }
+     else {
+      
      
           const { Link } = req.body;
 
@@ -44,9 +30,12 @@ router.post('/link', verify,async (req, res) => {
                Link
           });
 
-          try {const hola= await newLink.save()
-               res.send("Link added done")}
+          try {
+               const hola = await newLink.save()
+               res.send("Link added done")
+          }
           catch (err) { res.status(400).send(err) }
+     }
 })
 
 

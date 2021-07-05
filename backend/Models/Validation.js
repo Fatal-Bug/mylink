@@ -24,9 +24,7 @@ const loginValidation = (data) => {
 //Link validation schema
 const linkValidation = (data) => {
      const schema = Joi.object({
-          Link1: Joi.string().min(6).required(),
-          Link2: Joi.string().min(6).required(),
-          Link3: Joi.string().min(6).required()
+          Link: Joi.array().items(Joi.object({link: Joi.string().min(6).required().uri()})) 
      });
      return (schema.validate(data))
 }
