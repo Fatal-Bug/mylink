@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 require('dotenv').config();
 
 const app = express()
-const port = process.env.PORT || 4000
+const port = process.env.PORT || 5000
 const auth = require('./Routes/Auth')
 const post=require('./Routes/exampleOfPrivateRoute')
 
@@ -32,8 +32,8 @@ connection.once('open', ()=> {
 
 
 //route middleware
+app.use('/api/user', auth)
 
-app.use('/api/post',post)
 
 
 app.listen(port, () => {
