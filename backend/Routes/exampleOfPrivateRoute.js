@@ -19,11 +19,9 @@ router.post('/link', verify,async (req, res) => {
      
           const { Link } = req.body;
 
-          const entoken = req.header('auth-token')
           
-          const token = await cryptr.decrypt(entoken);
 
-          const _id = jwt.verify(token, process.env.TOKEN_SECRET)._id
+          const _id = req.user._id
           
           const newLink = new linkModel({
                _id,
@@ -37,6 +35,5 @@ router.post('/link', verify,async (req, res) => {
           catch (err) { res.status(400).send(err) }
      }
 })
-
 
 module.exports = router;

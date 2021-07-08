@@ -2,8 +2,9 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
-require('dotenv').config();
 
+require('dotenv').config();
+const cookie_pareser = require("cookie-parser")
 const app = express()
 const port = process.env.PORT || 5000
 const auth = require('./Routes/Auth')
@@ -12,12 +13,12 @@ const post=require('./Routes/exampleOfPrivateRoute')
 //middleware
 app.use(cors())
 app.use(express.json())
+app.use(cookie_pareser())
 
+//connect to MongoDB
+const mongouri = process.env.ATLAS_URI
 
-//connect to DB
-const uri = process.env.ATLAS_URI
-
-mongoose.connect(uri, {
+mongoose.connect(mongouri, {
      useNewUrlParser: true,
      useCreateIndex: true,
      useUnifiedTopology: true
@@ -31,6 +32,7 @@ connection.once('open', ()=> {
 })
 
 
+
 //route middleware
 app.use('/api/user', auth)
 
@@ -38,4 +40,6 @@ app.use('/api/user', auth)
 
 app.listen(port, () => {
      console.log(`listening to port : ${port}`)
-}) 
+})
+
+//module.exports= client

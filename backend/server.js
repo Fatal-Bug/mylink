@@ -8,11 +8,11 @@ const app = express()
 const port = process.env.PORT || 4000
 const auth = require('./Routes/Auth')
 const post=require('./Routes/exampleOfPrivateRoute')
-
+const cookie_pareser = require("cookie-parser")
 //middleware
 app.use(cors())
 app.use(express.json())
-
+app.use(cookie_pareser())
 
 //connect to DB
 const uri = process.env.ATLAS_URI
