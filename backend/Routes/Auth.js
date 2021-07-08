@@ -95,9 +95,12 @@ router.post("/login", async (req, res) => {
      }   
 })
 
+//Logout
 router.delete("/logout",verify ,async (req, res) => {
           authModel.findByIdAndDelete(req.user._id)
-               .then(() => { res.send("uid has been deleted") })
+               .then(() => {
+                    res.clearCookie("authtoken").send("uid has been deleted")
+               })
                .catch((err)=>{res.status(400).json(err)})
 })
 module.exports = router;
